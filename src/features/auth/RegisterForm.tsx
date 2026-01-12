@@ -25,8 +25,12 @@ const RegisterForm = () => {
 
     try {
       await api.register(formData.name, formData.email, formData.password);
-    } catch (error: any) {
-      setError(error.message || "Register error");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Register error");
+      }
     } finally {
       setLoading(false);
     }

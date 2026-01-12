@@ -80,7 +80,10 @@ const TodoItem = ({ todo }: { todo: ITodo }) => {
             label="Status"
             selectedKeys={[editForm.status]}
             onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-              setEditForm({ ...editForm, status: e.target.value as any })
+              setEditForm({
+                ...editForm,
+                status: e.target.value as ITodo["status"],
+              })
             }
           >
             <SelectItem key="todo">To do</SelectItem>

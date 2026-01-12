@@ -25,8 +25,12 @@ const LoginForm = () => {
       setLoading(true);
       await api.login(formData.email, formData.password);
       navigate("/boards");
-    } catch (error: any) {
-      setError(error.message || "Login error");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Login error");
+      }
     } finally {
       setLoading(false);
     }

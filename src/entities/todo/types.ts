@@ -11,3 +11,12 @@ export interface IBoard {
   title: string;
   ownerId: string;
 }
+
+export interface IUser {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+}
+
+export type StoredData = ITodo | ITodo[] | IBoard | IBoard[] | IUser | IUser[];

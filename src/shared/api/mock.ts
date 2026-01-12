@@ -1,10 +1,15 @@
-import type { IBoard, ITodo } from "@/entities/todo/types.ts";
+import type {
+  IBoard,
+  ITodo,
+  IUser,
+  StoredData,
+} from "@/entities/todo/types.ts";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const database = {
   getData: (key: string) => JSON.parse(localStorage.getItem(key) || "[]"),
-  setData: (key: string, data: any) =>
+  setData: <T extends StoredData>(key: string, data: T) =>
     localStorage.setItem(key, JSON.stringify(data)),
 };
 
@@ -13,7 +18,7 @@ export const api = {
     await delay(400);
     const users = database.getData("users");
 
-    if (users.find((user: any) => user.email === email)) {
+    if (users.find((user: IUser) => user.email === email)) {
       throw new Error("User already exists");
     }
 
@@ -23,7 +28,7 @@ export const api = {
   login: async (email: string, password: string) => {
     await delay(500);
     const users = database.getData("users");
-    const user = users.find((user: any) => user.email === email);
+    const user = users.find((user: IUser) => user.email === email);
 
     if (!user) {
       throw new Error("User does not exist");
