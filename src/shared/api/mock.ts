@@ -36,6 +36,10 @@ export const api = {
     }
     localStorage.setItem("user", JSON.stringify(user));
   },
+  getUser: async () => {
+    const user = localStorage.getItem("user");
+    return user ? JSON.parse(user) : null;
+  },
   logout: () => {
     localStorage.removeItem("user");
   },
@@ -72,6 +76,19 @@ export const api = {
     const boards: IBoard[] = database.getData("boards");
     return boards.find((board: IBoard) => board.id === id);
   },
+  deleteBoard: async (id: string) => {
+    await delay(500);
+    const boards: IBoard[] = database.getData("boards");
+    const todos: ITodo[] = database.getData("todos");
+    database.setData(
+      "boards",
+      boards.filter((board: IBoard) => board.id !== id),
+    );
+    database.setData(
+      "todos",
+      todos.filter((todo: ITodo) => todo.boardId !== id),
+    );
+  },
   getTodos: async (boardId: string) => {
     await delay(500);
     const todos: ITodo[] = database.getData("todos");
@@ -82,9 +99,25 @@ export const api = {
   createTodo: async (data: ITodo) => {
     await delay(500);
     const todos: ITodo[] = database.getData("todos");
-    console.log(todos, "createTodo mock.js");
-    const newTodo = { id: crypto.randomUUID(), ...data };
-    console.log(newTodo, " newTodo111");
-    database.setData("todos", [...todos, newTodo]);
+    database.setData("todos", [...todos, data]);
+  },
+  updateTodo: async (
+    todoId: string,
+    data: { title: string; description: string },
+  ) => {
+    await delay(500);
+    const todos: ITodo[] = database.getData("todos");
+    const newTodos = todos.map((todo: ITodo) => {
+      return todo.id === todoId ? { ...todo, ...data } : todo;
+    });
+    database.setData("todos", newTodos);
+  },
+  deleteTodo: async (id: string) => {
+    await delay(500);
+    const todos: ITodo[] = database.getData("todos");
+    database.setData(
+      "todos",
+      todos.filter((todo: ITodo) => todo.id !== id),
+    );
   },
 };

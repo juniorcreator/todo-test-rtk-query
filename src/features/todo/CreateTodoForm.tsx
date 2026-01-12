@@ -23,6 +23,7 @@ const CreateTodoForm = ({ boardId }: { boardId: string }) => {
     e.preventDefault();
     if (todo.title.trim() && todo.description.trim()) {
       mutation.mutate({
+        id: crypto.randomUUID(),
         title: todo.title,
         description: todo.description,
         status: "todo",

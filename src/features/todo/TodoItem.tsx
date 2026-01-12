@@ -10,10 +10,27 @@ import {
   Select,
   SelectItem,
 } from "@heroui/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { api } from "@/shared/api/mock.ts";
 
 const TodoItem = ({ todo }: { todo: ITodo }) => {
+  const client = useQueryClient();
   const [isEditing, setIsEditing] = useState(false);
   const [editForm, setEditForm] = useState(todo);
+  const { mutate: updateMutation, isPending: updateLoading } = useMutation({
+    mutationFn: () => api.updateTodo(todo.id, editForm),
+    onSuccess: () => {
+      setIsEditing(false);
+      client.invalidateQueries({ queryKey: ["todos", todo.boardId] });
+    },
+  });
+  const { mutate: deleteMutation, isPending: deleteLoading } = useMutation({
+    mutationFn: () => api.deleteTodo(todo.id),
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: ["todos", todo.boardId] });
+    },
+  });
+
   const todoStatusColor: Record<string, "default" | "primary" | "success"> = {
     todo: "default",
     inProgress: "primary",
@@ -25,7 +42,14 @@ const TodoItem = ({ todo }: { todo: ITodo }) => {
       <CardBody>
         <div className="flex justify-between items-start mb-2">
           {isEditing ? (
-            <Input size="sm" label="Name" value={editForm.title} />
+            <Input
+              onValueChange={(value: string) =>
+                setEditForm({ ...editForm, title: value })
+              }
+              size="sm"
+              label="Name"
+              value={editForm.title}
+            />
           ) : (
             <h4 className="font-semibold text-lg">{todo.title}</h4>
           )}
@@ -42,6 +66,9 @@ const TodoItem = ({ todo }: { todo: ITodo }) => {
             size="sm"
             label="Description"
             value={editForm.description}
+            onValueChange={(value: string) =>
+              setEditForm({ ...editForm, description: value })
+            }
           />
         ) : (
           <p className="text-default-500 text-sm mb-4">{todo.description}</p>
@@ -72,7 +99,13 @@ const TodoItem = ({ todo }: { todo: ITodo }) => {
               >
                 Cancel
               </Button>
-              <Button size="sm" variant="light" color="primary">
+              <Button
+                isLoading={updateLoading}
+                onPress={() => updateMutation()}
+                size="sm"
+                variant="light"
+                color="primary"
+              >
                 Save
               </Button>
             </div>
@@ -85,7 +118,13 @@ const TodoItem = ({ todo }: { todo: ITodo }) => {
               >
                 Change
               </Button>
-              <Button size="sm" variant="light" color="danger">
+              <Button
+                isLoading={deleteLoading}
+                onPress={() => deleteMutation()}
+                size="sm"
+                variant="light"
+                color="danger"
+              >
                 Delete
               </Button>
             </div>
