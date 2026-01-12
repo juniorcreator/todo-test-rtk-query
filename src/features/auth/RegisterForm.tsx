@@ -1,6 +1,6 @@
 import { Input, Button } from "@heroui/react";
 import { useState } from "react";
-import { api } from "../../shared/api/mock.ts";
+import { api } from "@/shared/api/mock.ts";
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({

@@ -1,3 +1,5 @@
+import type { IBoard, ITodo } from "@/entities/todo/types.ts";
+
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const database = {
@@ -36,5 +38,53 @@ export const api = {
   },
   logout: () => {
     localStorage.removeItem("user");
+  },
+  createBoard: async (title: string) => {
+    await delay(500);
+    const userStr = localStorage.getItem("user");
+
+    if (!userStr) throw new Error("Not authenticated");
+    const user = JSON.parse(userStr);
+    const boards = database.getData("boards");
+
+    const newBoard = {
+      id: crypto.randomUUID(),
+      title,
+      ownerId: user.id,
+    };
+
+    database.setData("boards", [...boards, newBoard]);
+  },
+  getBoards: async () => {
+    await delay(500);
+    const userStr = localStorage.getItem("user");
+    if (!userStr) return [];
+    const user = JSON.parse(userStr);
+
+    console.log(user, "users mock.js");
+    const boards = database.getData("boards");
+    console.log(boards, "boards mock.js");
+
+    return boards.filter((board: IBoard) => board.ownerId === user.id);
+  },
+  getBoard: async (id: string) => {
+    await delay(500);
+    const boards: IBoard[] = database.getData("boards");
+    return boards.find((board: IBoard) => board.id === id);
+  },
+  getTodos: async (boardId: string) => {
+    await delay(500);
+    const todos: ITodo[] = database.getData("todos");
+    console.log(todos, "todos mock.js");
+
+    return todos.filter((todo: ITodo) => todo.boardId === boardId);
+  },
+  createTodo: async (data: ITodo) => {
+    await delay(500);
+    const todos: ITodo[] = database.getData("todos");
+    console.log(todos, "createTodo mock.js");
+    const newTodo = { id: crypto.randomUUID(), ...data };
+    console.log(newTodo, " newTodo111");
+    database.setData("todos", [...todos, newTodo]);
   },
 };

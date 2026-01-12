@@ -1,8 +1,8 @@
 import { Tabs, Tab, Card, CardBody, Button } from "@heroui/react";
 import { useState } from "react";
-import RegisterForm from "../features/auth/RegisterForm.tsx";
-import LoginForm from "../features/auth/LoginForm.tsx";
-import { api } from "../shared/api/mock.ts";
+import RegisterForm from "@/features/auth/RegisterForm.tsx";
+import LoginForm from "@/features/auth/LoginForm.tsx";
+import { api } from "@/shared/api/mock.ts";
 
 const Login = () => {
   const [selectedTab, setSelectedTab] = useState<string>("login");

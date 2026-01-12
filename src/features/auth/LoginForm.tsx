@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Input } from "@heroui/react";
-import { api } from "../../shared/api/mock.ts";
+import { api } from "@/shared/api/mock.ts";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
