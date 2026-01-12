@@ -5,6 +5,7 @@ import BoardsList from "@/pages/BoardsList.tsx";
 import BoardDetail from "@/pages/BoardDetail.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useSession } from "@/entities/session/queries.ts";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => {
       <HeroUIProvider className="h-full">
         <QueryClientProvider client={queryClient}>
           <div className="p-5 h-full bg-gray-400">
+            <Toaster />
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route element={<PrivateRoute />}>
