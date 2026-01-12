@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Button, Input } from "@heroui/react";
 import { api } from "@/shared/api/mock.ts";
+import { useNavigate } from "react-router";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -15,15 +17,14 @@ const LoginForm = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
-    console.log(formData, " formData login");
   };
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
-    console.log(formData, " formData login");
 
     try {
+      setLoading(true);
       await api.login(formData.email, formData.password);
-      console.log("logined");
+      navigate("/boards");
     } catch (error: any) {
       setError(error.message || "Login error");
     } finally {

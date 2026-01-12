@@ -12,11 +12,10 @@ const CreateBoardForm = () => {
     mutationFn: api.createBoard,
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ["boards"] });
-      console.log(title, " title");
       setTitle("");
     },
     onError: (err) => {
-      console.log(err, " CreateBoardForm");
+      console.error(err.message || "error in CreateBoardForm");
     },
   });
 

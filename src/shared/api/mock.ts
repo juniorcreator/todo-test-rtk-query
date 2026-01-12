@@ -12,20 +12,17 @@ export const api = {
   register: async (name: string, email: string, password: string) => {
     await delay(400);
     const users = database.getData("users");
-    console.log(users, "users mock.js");
 
     if (users.find((user: any) => user.email === email)) {
       throw new Error("User already exists");
     }
 
     const newUser = { id: crypto.randomUUID(), name, email, password };
-    console.log(newUser, "newUser mock.js");
     database.setData("users", [...users, newUser]);
   },
   login: async (email: string, password: string) => {
     await delay(500);
     const users = database.getData("users");
-    console.log(users, "users login mock.js");
     const user = users.find((user: any) => user.email === email);
 
     if (!user) {
@@ -40,7 +37,7 @@ export const api = {
     const user = localStorage.getItem("user");
     return user ? JSON.parse(user) : null;
   },
-  logout: () => {
+  logout: async () => {
     localStorage.removeItem("user");
   },
   createBoard: async (title: string) => {
@@ -64,10 +61,7 @@ export const api = {
     const userStr = localStorage.getItem("user");
     if (!userStr) return [];
     const user = JSON.parse(userStr);
-
-    console.log(user, "users mock.js");
     const boards = database.getData("boards");
-    console.log(boards, "boards mock.js");
 
     return boards.filter((board: IBoard) => board.ownerId === user.id);
   },
@@ -92,8 +86,6 @@ export const api = {
   getTodos: async (boardId: string) => {
     await delay(500);
     const todos: ITodo[] = database.getData("todos");
-    console.log(todos, "todos mock.js");
-
     return todos.filter((todo: ITodo) => todo.boardId === boardId);
   },
   createTodo: async (data: ITodo) => {

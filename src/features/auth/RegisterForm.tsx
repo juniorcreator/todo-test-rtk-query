@@ -16,7 +16,6 @@ const RegisterForm = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
-    console.log(formData, " formData register");
   };
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
@@ -31,8 +30,6 @@ const RegisterForm = () => {
     } finally {
       setLoading(false);
     }
-
-    console.log(formData, " formData register");
   };
 
   return (

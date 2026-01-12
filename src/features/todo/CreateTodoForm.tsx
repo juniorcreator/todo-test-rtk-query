@@ -11,7 +11,7 @@ const CreateTodoForm = ({ boardId }: { boardId: string }) => {
     description: "",
   });
 
-  const mutation = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (data: ITodo) => api.createTodo(data),
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ["todos", boardId] });
@@ -22,7 +22,7 @@ const CreateTodoForm = ({ boardId }: { boardId: string }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (todo.title.trim() && todo.description.trim()) {
-      mutation.mutate({
+      mutate({
         id: crypto.randomUUID(),
         title: todo.title,
         description: todo.description,
@@ -59,7 +59,7 @@ const CreateTodoForm = ({ boardId }: { boardId: string }) => {
           setTodo({ ...todo, [event.target.name]: event.target.value })
         }
       />
-      <Button color="primary" type="submit">
+      <Button isLoading={isPending} color="primary" type="submit">
         Add todo
       </Button>
     </form>

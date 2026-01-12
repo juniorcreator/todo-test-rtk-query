@@ -1,16 +1,21 @@
-import { Tabs, Tab, Card, CardBody, Button } from "@heroui/react";
+import { Tabs, Tab, Card, CardBody, Spinner } from "@heroui/react";
+import { Navigate } from "react-router-dom";
 import { useState } from "react";
 import RegisterForm from "@/features/auth/RegisterForm.tsx";
 import LoginForm from "@/features/auth/LoginForm.tsx";
-import { api } from "@/shared/api/mock.ts";
+import { useSession } from "@/entities/session/queries.ts";
 
 const Login = () => {
+  const { data: user, isLoading } = useSession();
   const [selectedTab, setSelectedTab] = useState<string>("login");
-  console.log(selectedTab);
+
+  if (isLoading) return <Spinner />;
+
+  if (user) return <Navigate to="/boards" replace />;
 
   return (
     <div className="h-screen flex items-center justify-center">
-      <Card className="w-[350px] h-[400px] max-w-full">
+      <Card className="w-[350px] max-w-full">
         <CardBody className="">
           <Tabs
             size="md"
@@ -29,7 +34,6 @@ const Login = () => {
               </div>
             </Tab>
           </Tabs>
-          <Button onPress={api.logout}>Logout</Button>
         </CardBody>
       </Card>
     </div>
