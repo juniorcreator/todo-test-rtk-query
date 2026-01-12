@@ -2,8 +2,10 @@ import { useState } from "react";
 import { Button, Input } from "@heroui/react";
 import { api } from "@/shared/api/mock.ts";
 import { useNavigate } from "react-router";
+import toast, { Toaster } from "react-hot-toast";
 
 const LoginForm = () => {
+  const notify = () => toast("Logged successfully");
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -23,6 +25,7 @@ const LoginForm = () => {
 
     try {
       setLoading(true);
+      notify();
       await api.login(formData.email, formData.password);
       navigate("/boards");
     } catch (error: unknown) {
@@ -68,6 +71,7 @@ const LoginForm = () => {
       >
         Login
       </Button>
+      <Toaster />
     </form>
   );
 };
