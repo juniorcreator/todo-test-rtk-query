@@ -54,7 +54,7 @@ const BoardDetail = () => {
               label="Todo Filter"
             >
               <SelectItem key="all">All todos</SelectItem>
-              <SelectItem key="tod">To do</SelectItem>
+              <SelectItem key="todo">To do</SelectItem>
               <SelectItem key="inProgress">In progress</SelectItem>
               <SelectItem key="done">Done</SelectItem>
             </Select>
