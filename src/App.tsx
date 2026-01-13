@@ -2,7 +2,7 @@ import { HeroUIProvider } from "@heroui/react";
 import { Routes, Route, Navigate, Outlet } from "react-router";
 import Login from "@/pages/Login.tsx";
 import BoardsList from "@/pages/boards/BoardsPage.tsx";
-import BoardDetail from "@/pages/BoardDetail.tsx";
+import BoardDetailPage from "@/pages/board-detail/BoardDetailPage.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@/app/providers/AuthProvider.tsx";
@@ -34,7 +34,10 @@ const App = () => {
                 <Route path="/login" element={<Login />} />
                 <Route element={<PrivateRoute />}>
                   <Route path="/boards" element={<BoardsList />} />
-                  <Route path="/boards/:boardId" element={<BoardDetail />} />
+                  <Route
+                    path="/boards/:boardId"
+                    element={<BoardDetailPage />}
+                  />
                   <Route path="/" element={<Navigate to="/" />} />
                 </Route>
                 <Route path="*" element={<div>Page not found</div>} />

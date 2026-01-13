@@ -1,15 +1,15 @@
-import { Button, Select, SelectItem, Spinner } from "@heroui/react";
-import { Link, useParams } from "react-router";
-import { type ChangeEvent, useState } from "react";
-import TodoItem from "@/features/todo/TodoItem.tsx";
-import CreateTodoForm from "@/features/todo/CreateTodoForm.tsx";
+import { Button, Spinner } from "@heroui/react";
+import { Link } from "react-router";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/shared/api/mock.ts";
 import type { ITodo } from "@/entities/todo/types.ts";
+import TodoItemUpdate from "@/features/todo/update/ui/TodoItemUpdate.tsx";
+import TodoFilter from "@/features/todo/filter/ui/TodoFilter.tsx";
+import CreateTodoForm from "@/features/todo/create/ui/CreateTodoForm.tsx";
 
-const BoardDetail = () => {
+const BoardDetail = ({ boardId }: { boardId: string }) => {
   const [filter, setFilter] = useState("all");
-  const { boardId } = useParams();
   const { data: board, isLoading: boardLoading } = useQuery({
     queryFn: () => api.getBoard(boardId!),
     queryKey: ["board", boardId],
@@ -19,11 +19,10 @@ const BoardDetail = () => {
     queryKey: ["todos", boardId],
   });
 
-  console.log(filter, " filter");
   if (boardLoading || todosLoading) {
     return (
       <div className="p-10 flex justify-center">
-        <Spinner />
+        <Spinner size="sm" />
       </div>
     );
   }
@@ -35,7 +34,7 @@ const BoardDetail = () => {
   );
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
+    <>
       <div className="mb-6 flex items-center gap-4">
         <Button as={Link} to="/boards" variant="shadow" size="sm">
           ⏮️ Back
@@ -43,23 +42,10 @@ const BoardDetail = () => {
         <h1 className="text-3xl font-bold">Board: {board.title}</h1>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-4 items-start">
-        <div className="w-ful md:w-1/3 flex flex-col gap-2 sticky top-4">
-          <div className="bg-default-50 p-4 rounded-xl border border-default-200">
-            <Select
-              selectedKeys={[filter]}
-              onChange={(event: ChangeEvent<HTMLSelectElement>) =>
-                setFilter(event.target.value)
-              }
-              label="Todo Filter"
-            >
-              <SelectItem key="all">All todos</SelectItem>
-              <SelectItem key="todo">To do</SelectItem>
-              <SelectItem key="inProgress">In progress</SelectItem>
-              <SelectItem key="done">Done</SelectItem>
-            </Select>
-          </div>
-          <CreateTodoForm boardId={board.id} />
+      <div className="flex gap-6">
+        <div className="flex flex-col gap-6 items-start">
+          <TodoFilter value={filter} onChange={setFilter} />
+          <CreateTodoForm boardId={boardId} />
         </div>
 
         <div className="w-full md:w-2/3 flex flex-col gap-4">
@@ -69,11 +55,11 @@ const BoardDetail = () => {
             </div>
           )}
           {filteredTodos?.map((todo: ITodo) => (
-            <TodoItem key={todo.id} todo={todo} />
+            <TodoItemUpdate key={todo.id} todo={todo} />
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
