@@ -1,9 +1,6 @@
-import type {
-  IBoard,
-  ITodo,
-  IUser,
-  StoredData,
-} from "@/entities/todo/types.ts";
+import type { ITodo, StoredData } from "@/entities/todo/types.ts";
+import type { IUser } from "@/app/model/types.ts";
+import type { IBoard } from "@/entities/board/model/types.ts";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

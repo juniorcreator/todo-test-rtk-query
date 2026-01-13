@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Input, Button } from "@heroui/react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Button, Input } from "@heroui/react";
 import * as React from "react";
+import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/shared/api/mock.ts";
 
 const CreateBoardForm = () => {
@@ -25,6 +25,7 @@ const CreateBoardForm = () => {
       mutation.mutate(title);
     }
   };
+
   return (
     <form onSubmit={handleSubmit} className="flex gap-2 items-end mb-8">
       <Input
@@ -36,7 +37,12 @@ const CreateBoardForm = () => {
         variant="bordered"
         className="max-w-xs"
       />
-      <Button isLoading={mutation.isPending} color="primary" type="submit">
+      <Button
+        className="mb-1"
+        isLoading={mutation.isPending}
+        color="primary"
+        type="submit"
+      >
         Create
       </Button>
     </form>

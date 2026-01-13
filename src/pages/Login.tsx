@@ -3,10 +3,10 @@ import { Navigate } from "react-router-dom";
 import { useState } from "react";
 import RegisterForm from "@/features/auth/RegisterForm.tsx";
 import LoginForm from "@/features/auth/LoginForm.tsx";
-import { useSession } from "@/entities/session/queries.ts";
+import { useAuth } from "@/shared/lib/useAuth.ts";
 
 const Login = () => {
-  const { data: user, isLoading } = useSession();
+  const { user, isLoading } = useAuth();
   const [selectedTab, setSelectedTab] = useState<string>("login");
 
   if (isLoading) return <Spinner />;

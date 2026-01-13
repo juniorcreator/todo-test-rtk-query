@@ -1,9 +1,10 @@
 import { Input, Button } from "@heroui/react";
 import { useState } from "react";
-import { api } from "@/shared/api/mock.ts";
 import toast from "react-hot-toast";
+import { useAuth } from "@/shared/lib/useAuth.ts";
 
 const RegisterForm = () => {
+  const { register } = useAuth();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -25,7 +26,7 @@ const RegisterForm = () => {
     setError("");
 
     try {
-      await api.register(formData.name, formData.email, formData.password);
+      await register(formData.name, formData.email, formData.password);
       toast.success("Registered, now login");
     } catch (error: unknown) {
       if (error instanceof Error) {
