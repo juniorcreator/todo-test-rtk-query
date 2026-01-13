@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/shared/api/mock.ts";
 import type { ITodo } from "@/entities/todo/types.ts";
-import TodoItemUpdate from "@/features/todo/update/ui/TodoItemUpdate.tsx";
+import TodoItem from "@/features/todo/TodoItem.tsx";
 import TodoFilter from "@/features/todo/filter/ui/TodoFilter.tsx";
 import CreateTodoForm from "@/features/todo/create/ui/CreateTodoForm.tsx";
 
@@ -43,7 +43,7 @@ const BoardDetail = ({ boardId }: { boardId: string }) => {
       </div>
 
       <div className="flex gap-6">
-        <div className="flex flex-col gap-6 items-start">
+        <div className="flex flex-col gap-2 items-start">
           <TodoFilter value={filter} onChange={setFilter} />
           <CreateTodoForm boardId={boardId} />
         </div>
@@ -55,7 +55,7 @@ const BoardDetail = ({ boardId }: { boardId: string }) => {
             </div>
           )}
           {filteredTodos?.map((todo: ITodo) => (
-            <TodoItemUpdate key={todo.id} todo={todo} />
+            <TodoItem key={todo.id} todo={todo} />
           ))}
         </div>
       </div>
