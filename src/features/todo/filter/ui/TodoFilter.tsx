@@ -9,6 +9,7 @@ interface TodoFilterProps {
 const TodoFilter = ({ value, onChange }: TodoFilterProps) => {
   return (
     <div className="bg-default-50 p-4 rounded-xl border border-default-200 w-full">
+      <p>Filter todo</p>
       <Select
         size="sm"
         className="w-40 mt-2"

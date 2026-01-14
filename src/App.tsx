@@ -1,12 +1,12 @@
 import { HeroUIProvider } from "@heroui/react";
 import { Routes, Route, Navigate, Outlet } from "react-router";
-import Login from "@/pages/Login.tsx";
 import BoardsList from "@/pages/boards/BoardsPage.tsx";
 import BoardDetailPage from "@/pages/board-detail/BoardDetailPage.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@/app/providers/AuthProvider.tsx";
 import { useAuth } from "@/shared/lib/useAuth.ts";
+import LoginRegisterPage from "@/pages/login-register/LoginRegisterPage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -31,7 +31,7 @@ const App = () => {
             <div className="p-5 h-full bg-gray-400">
               <Toaster />
               <Routes>
-                <Route path="/login" element={<Login />} />
+                <Route path="/login" element={<LoginRegisterPage />} />
                 <Route element={<PrivateRoute />}>
                   <Route path="/boards" element={<BoardsList />} />
                   <Route

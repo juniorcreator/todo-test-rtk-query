@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { ITodo } from "@/entities/todo/types.ts";
+import type { ITodo } from "@/entities/todo/model/types.ts";
 
 export const useTodoForm = (initTodo: ITodo) => {
   const [todoState, setTodoState] = useState<ITodo>(initTodo);

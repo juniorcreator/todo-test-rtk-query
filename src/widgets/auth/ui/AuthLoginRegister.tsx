@@ -1,22 +1,21 @@
-import { Tabs, Tab, Card, CardBody, Spinner } from "@heroui/react";
-import { Navigate } from "react-router-dom";
 import { useState } from "react";
-import RegisterForm from "@/features/auth/RegisterForm.tsx";
-import LoginForm from "@/features/auth/LoginForm.tsx";
 import { useAuth } from "@/shared/lib/useAuth.ts";
+import { Card, CardBody, Spinner, Tab, Tabs } from "@heroui/react";
+import { Navigate } from "react-router-dom";
+import LoginForm from "@/features/auth/login/ui/LoginForm.tsx";
+import RegisterForm from "@/features/auth/register/ui/RegisterForm.tsx";
 
-const Login = () => {
+const AuthLoginRegister = () => {
   const { user, isLoading } = useAuth();
   const [selectedTab, setSelectedTab] = useState<string>("login");
 
   if (isLoading) return <Spinner />;
-
   if (user) return <Navigate to="/boards" replace />;
 
   return (
     <div className="h-screen flex items-center justify-center">
       <Card className="w-[350px] max-w-full">
-        <CardBody className="">
+        <CardBody className="p-6">
           <Tabs
             size="md"
             fullWidth
@@ -30,7 +29,7 @@ const Login = () => {
             </Tab>
             <Tab key="register" title="Register">
               <div className="pt-3">
-                <RegisterForm />
+                <RegisterForm onSuccess={() => setSelectedTab("login")} />
               </div>
             </Tab>
           </Tabs>
@@ -40,4 +39,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AuthLoginRegister;

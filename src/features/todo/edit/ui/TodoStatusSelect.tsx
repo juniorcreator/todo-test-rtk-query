@@ -1,6 +1,6 @@
 import { Select, SelectItem } from "@heroui/react";
 import type { ChangeEvent } from "react";
-import type { ITodo } from "@/entities/todo/types.ts";
+import type { ITodo } from "@/entities/todo/model/types.ts";
 
 interface TodoStatusSelectProps {
   value: string;

@@ -1,6 +1,6 @@
 import { Button } from "@heroui/react";
 import { useState } from "react";
-import type { ITodo } from "@/entities/todo/types.ts";
+import type { ITodo } from "@/entities/todo/model/types.ts";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/shared/api/mock.ts";
 import TodoCard from "@/entities/todo/ui/TodoCard.tsx";

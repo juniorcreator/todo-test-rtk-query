@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/shared/api/mock.ts";
-import type { ITodo } from "@/entities/todo/types.ts";
+import type { ITodo } from "@/entities/todo/model/types.ts";
 import TodoItem from "@/features/todo/TodoItem.tsx";
 import TodoFilter from "@/features/todo/filter/ui/TodoFilter.tsx";
 import CreateTodoForm from "@/features/todo/create/ui/CreateTodoForm.tsx";
@@ -50,8 +50,8 @@ const BoardDetail = ({ boardId }: { boardId: string }) => {
 
         <div className="w-full md:w-2/3 flex flex-col gap-4">
           {filteredTodos?.length === 0 && (
-            <div className="text-center py-10 text-default-400">
-              No todos found
+            <div className="text-center py-10 text-white font-bold">
+              No todos found.😢
             </div>
           )}
           {filteredTodos?.map((todo: ITodo) => (

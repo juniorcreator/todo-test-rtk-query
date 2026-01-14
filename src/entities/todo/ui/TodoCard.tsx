@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import type { ITodo } from "@/entities/todo/types.ts";
+import type { ITodo } from "@/entities/todo/model/types.ts";
 import { Card, CardBody, Chip } from "@heroui/react";
 import { todoStatusColor } from "@/entities/todo/lib/todoStatusColor.ts";
 

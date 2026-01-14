@@ -1,4 +1,4 @@
-import type { ITodo, StoredData } from "@/entities/todo/types.ts";
+import type { ITodo, StoredData } from "@/entities/todo/model/types.ts";
 import type { IUser } from "@/app/model/types.ts";
 import type { IBoard } from "@/entities/board/model/types.ts";
 

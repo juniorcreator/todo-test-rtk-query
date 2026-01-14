@@ -1,5 +1,5 @@
 import { Button, Card, CardBody, Input, Textarea } from "@heroui/react";
-import type { ITodo } from "@/entities/todo/types.ts";
+import type { ITodo } from "@/entities/todo/model/types.ts";
 import { useTodoForm } from "@/features/todo/update/model/useTodoForm.ts";
 import TodoStatusSelect from "@/features/todo/edit/ui/TodoStatusSelect.tsx";
 

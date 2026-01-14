@@ -2,7 +2,7 @@ import { type ChangeEvent, useState } from "react";
 import { Button, Input, Textarea } from "@heroui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/shared/api/mock.ts";
-import type { ITodo } from "@/entities/todo/types.ts";
+import type { ITodo } from "@/entities/todo/model/types.ts";
 
 const CreateTodoForm = ({ boardId }: { boardId: string }) => {
   const client = useQueryClient();
