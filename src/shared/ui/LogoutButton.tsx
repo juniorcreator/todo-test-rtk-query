@@ -7,6 +7,7 @@ const LogoutButton = () => {
 
   return (
     <Button
+      className="text-white font-bold"
       size="sm"
       onPress={authContext?.logout}
       color="primary"

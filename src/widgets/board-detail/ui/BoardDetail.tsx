@@ -1,4 +1,4 @@
-import { Button, Spinner } from "@heroui/react";
+import { Button, Skeleton } from "@heroui/react";
 import { Link } from "react-router";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -19,15 +19,9 @@ const BoardDetail = ({ boardId }: { boardId: string }) => {
     queryKey: ["todos", boardId],
   });
 
-  if (boardLoading || todosLoading) {
-    return (
-      <div className="p-10 flex justify-center">
-        <Spinner size="sm" />
-      </div>
-    );
+  if (!board && !boardLoading) {
+    return <div className="p-10">Board not found</div>;
   }
-
-  if (!board) return <div>Board not found</div>;
 
   const filteredTodos = todos?.filter((todo: ITodo) =>
     filter === "all" ? true : todo.status === filter,
@@ -39,7 +33,11 @@ const BoardDetail = ({ boardId }: { boardId: string }) => {
         <Button as={Link} to="/boards" variant="shadow" size="sm">
           ⏮️ Back
         </Button>
-        <h1 className="text-3xl font-bold">Board: {board.title}</h1>
+        {boardLoading ? (
+          <Skeleton className="w-48 h-9 rounded-lg" />
+        ) : (
+          <h1 className="text-3xl font-bold">Board: {board!.title}</h1>
+        )}
       </div>
 
       <div className="flex gap-6">
@@ -49,14 +47,22 @@ const BoardDetail = ({ boardId }: { boardId: string }) => {
         </div>
 
         <div className="w-full md:w-2/3 flex flex-col gap-4">
-          {filteredTodos?.length === 0 && (
-            <div className="text-center py-10 text-white font-bold">
-              No todos found.😢
+          {todosLoading ? (
+            <div className="flex flex-col gap-3">
+              <Skeleton className="h-30 rounded-xl" />
             </div>
+          ) : (
+            <>
+              {filteredTodos?.length === 0 && (
+                <div className="text-center py-10 text-white font-bold">
+                  No todos found.😢
+                </div>
+              )}
+              {filteredTodos?.map((todo: ITodo) => (
+                <TodoItem key={todo.id} todo={todo} />
+              ))}
+            </>
           )}
-          {filteredTodos?.map((todo: ITodo) => (
-            <TodoItem key={todo.id} todo={todo} />
-          ))}
         </div>
       </div>
     </>

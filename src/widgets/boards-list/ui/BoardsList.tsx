@@ -12,28 +12,27 @@ const BoardsList = () => {
     queryKey: ["boards"],
   });
 
-  if (isLoading) {
-    return (
-      <div className="h-screen flex items-center justify-center">
-        <Spinner size="lg" />
-      </div>
-    );
-  }
   return (
     <>
       <CreateBoardForm />
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {boards?.map((board: IBoard) => (
-          <BoardsCard
-            key={board.id}
-            board={board}
-            actionSlot={<DeleteBoardButton boardId={board.id} />}
-          />
-        ))}
-        {boards?.length === 0 && (
-          <p className="text-white">List is empty, create new board</p>
-        )}
-      </div>
+      {isLoading ? (
+        <div className="h-screen flex items-center justify-center">
+          <Spinner size="lg" />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {boards?.map((board: IBoard) => (
+            <BoardsCard
+              key={board.id}
+              board={board}
+              actionSlot={<DeleteBoardButton boardId={board.id} />}
+            />
+          ))}
+          {boards?.length === 0 && (
+            <p className="text-white">List is empty, create new board</p>
+          )}
+        </div>
+      )}
     </>
   );
 };
